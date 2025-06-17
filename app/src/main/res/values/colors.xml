@@ -8,8 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="primary">#ec1c24</color>
-    <color name="secondary">#f58d91</color>
+    <color name="primary">#f9d487</color>
+    <color name="secondary">#f8d485</color>
     <color name="surface">#FFFFFF</color>
     <color name="text_primary">#1D1D1D</color>
     <color name="text_secondary">#757575</color>

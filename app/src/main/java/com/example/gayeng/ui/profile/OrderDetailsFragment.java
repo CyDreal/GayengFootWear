@@ -124,6 +124,24 @@ public class OrderDetailsFragment extends Fragment {
         binding.textPaymentMethod.setText(getString(R.string.payment_method,
                 order.getPaymentMethod().toUpperCase()));
 
+        // Display transaction ID if available
+        if (order.getPaymentToken() != null && !order.getPaymentToken().isEmpty()) {
+            binding.textTransactionId.setVisibility(View.VISIBLE);
+            binding.textTransactionId.setText(getString(R.string.transaction_id_format, order.getPaymentToken()));
+        } else {
+            binding.textTransactionId.setVisibility(View.GONE);
+        }
+
+        // Show WebView only if payment URL exists
+        if (order.getPaymentUrl() != null && !order.getPaymentUrl().isEmpty()) {
+            binding.webViewDetails.setVisibility(View.VISIBLE);
+            binding.webViewDetails.getSettings().setJavaScriptEnabled(true);
+            binding.webViewDetails.getSettings().setDomStorageEnabled(true);
+            binding.webViewDetails.loadUrl(order.getPaymentUrl());
+        } else {
+            binding.webViewDetails.setVisibility(View.GONE);
+        }
+
         // Set shipping address
         String fullAddress = String.format("%s\n%s, %s\n%s",
                 order.getShippingAddress(),

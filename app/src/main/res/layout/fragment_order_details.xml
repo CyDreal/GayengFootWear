@@ -111,7 +111,8 @@
                     <WebView
                         android:id="@+id/webViewDetails"
                         android:layout_width="match_parent"
-                        android:layout_height="400dp"
+                        android:layout_height="600dp"
+                        android:scrollbars="horizontal"
                         android:visibility="gone"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>

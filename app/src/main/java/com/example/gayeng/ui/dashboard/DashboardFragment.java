@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.bumptech.glide.Glide;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
@@ -26,6 +28,7 @@ import com.example.gayeng.api.response.ProductResponse;
 import com.example.gayeng.databinding.FragmentDashboardBinding;
 import com.example.gayeng.model.Category;
 import com.example.gayeng.model.Product;
+import com.example.gayeng.utils.SessionManager;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
@@ -62,7 +65,7 @@ public class DashboardFragment extends Fragment {
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
 
         // Setup base components
-        setupSearchButton();
+        setupUserProfile();
         setupImageSlider();
         setupCategories();
         setupRecyclerView(); // Separate RecyclerView setup
@@ -259,11 +262,20 @@ public class DashboardFragment extends Fragment {
         }
     }
 
-    private void setupSearchButton() {
-        binding.searchContainer.setOnClickListener(v ->
-                Navigation.findNavController(v)
-                        .navigate(R.id.action_dashboard_to_search)
-        );
+    private void setupUserProfile() {
+        SessionManager sessionManager = new SessionManager(requireContext());
+        String username = sessionManager.isGuest() ? "Guest" : sessionManager.getUsername();
+        binding.tvUsername.setText(username);
+
+        // Set avatar if available
+        String avatarUrl = sessionManager.getAvatar();
+        if (!sessionManager.isGuest() && avatarUrl != null && !avatarUrl.isEmpty()) {
+            Glide.with(this)
+                    .load(avatarUrl)
+                    .placeholder(R.drawable.default_image)
+                    .error(R.drawable.error_img)
+                    .into(binding.ivUserAvatar);
+        }
     }
 
     private void setupImageSlider() {
@@ -274,8 +286,6 @@ public class DashboardFragment extends Fragment {
         slideModels.add(new SlideModel(R.drawable.banner1, ScaleTypes.FIT));
         slideModels.add(new SlideModel(R.drawable.banner2, ScaleTypes.FIT));
         slideModels.add(new SlideModel(R.drawable.banner3, ScaleTypes.FIT));
-        slideModels.add(new SlideModel(R.drawable.banner4, ScaleTypes.FIT));
-        slideModels.add(new SlideModel(R.drawable.banner5, ScaleTypes.FIT));
 
         // Menggunakan imageSlider yang sudah diinisialisasi
         binding.imageSliderBanner.setImageList(slideModels, ScaleTypes.FIT);
@@ -283,9 +293,11 @@ public class DashboardFragment extends Fragment {
 
     private void setupCategories() {
         List<Category> categories = Arrays.asList(
-                new Category(R.drawable.ic_laptop, "Laptop"),
-                new Category(R.drawable.ic_phone, "Phone"),
-                new Category(R.drawable.ic_console, "Console")
+                new Category(R.drawable.nike, "Nike"),
+                new Category(R.drawable.puma, "Puma"),
+                new Category(R.drawable.newbalance, "NewBalance"),
+                new Category(R.drawable.onitsuka, "Onitsuka"),
+                new Category(R.drawable.adidas, "Adidas")
         );
 
         CategoryAdapter adapter = new CategoryAdapter(categories);

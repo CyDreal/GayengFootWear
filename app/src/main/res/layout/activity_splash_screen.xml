@@ -19,6 +19,13 @@
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/splash" />
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gayeng FootWear"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="35sp"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

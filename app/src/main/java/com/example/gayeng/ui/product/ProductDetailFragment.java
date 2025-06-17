@@ -19,7 +19,6 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.gayeng.R;
 import com.example.gayeng.LoginRegisterActivity;
 import com.example.gayeng.adapter.ProductImageAdapter;
-import com.example.gayeng.adapter.ProductThumbnailAdapter;
 import com.example.gayeng.api.ApiClient;
 import com.example.gayeng.api.ApiService;
 import com.example.gayeng.api.response.BaseResponse;
@@ -47,7 +46,6 @@ public class ProductDetailFragment extends Fragment {
     private ApiService apiService;
     private int productId;
     private ProductImageAdapter imageAdapter;
-    private ProductThumbnailAdapter thumbnailAdapter;
     private boolean isDestroyed = false;
     private SessionManager sessionManager;
     private Call<?> activeCall; // Menangani error yang terjadi karena race condition antara network
@@ -101,21 +99,7 @@ public class ProductDetailFragment extends Fragment {
 
     private void setupImageSlider() {
         imageAdapter = new ProductImageAdapter(requireContext());
-        thumbnailAdapter = new ProductThumbnailAdapter(requireContext(), binding.viewPagerImages);
-
         binding.viewPagerImages.setAdapter(imageAdapter);
-        binding.recyclerViewThumbnails.setAdapter(thumbnailAdapter);
-        binding.recyclerViewThumbnails.setLayoutManager(
-                new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
-
-        binding.viewPagerImages.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                // Update thumbnail selection based on the current image
-                thumbnailAdapter.updateSelection(position);
-                binding.recyclerViewThumbnails.smoothScrollToPosition(position);
-            }
-        });
     }
 
     private void setupBackButton() {
@@ -154,9 +138,7 @@ public class ProductDetailFragment extends Fragment {
             // Sort images based on image_order
             List<ProductImage> sortedImages = new ArrayList<>(product.getImages());
             Collections.sort(sortedImages, (a, b) -> Integer.compare(a.getImageOrder(), b.getImageOrder()));
-
             imageAdapter.setImages(product.getImages());
-            thumbnailAdapter.setImages(product.getImages());
         }
 
         // Set text fields

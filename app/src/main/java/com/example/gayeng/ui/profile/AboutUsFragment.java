@@ -55,12 +55,7 @@ public class AboutUsFragment extends Fragment {
         mapWebView.getSettings().setJavaScriptEnabled(true);
 
         // HTML content with iframe
-        String htmlContent = "<html><body>" +
-                "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.0131412595706!2d110.4591828744672!3d-7.007734968639391!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e708d9ab90b4b8f%3A0xec2ca2a4d252ebf5!2sAGRES%20ID%20SEMARANG!5e0!3m2!1sid!2sid!4v1749808862366!5m2!1sid!2sid\" " +
-                "width=\"100%\" height=\"100%\" style=\"border:0;\" " +
-                "allowfullscreen=\"\" loading=\"lazy\" " +
-                "referrerpolicy=\"no-referrer-when-downgrade\"></iframe>" +
-                "</body></html>";
+        String htmlContent = "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.104278818543!2d110.41351907446715!3d-6.996999368527376!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e708b6794166eb3%3A0x8f8964e5898d521e!2sJl.%20Lempongsari%20Timur%20III%20Jl.%20Veteran%20No.35%20B%2C%20Lempongsari%2C%20Kec.%20Gajahmungkur%2C%20Kota%20Semarang%2C%20Jawa%20Tengah%2050231!5e0!3m2!1sid!2sid!4v1750152040520!5m2!1sid!2sid\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>";
 
         // Load HTML content
         mapWebView.loadData(htmlContent, "text/html", "utf-8");
