@@ -180,7 +180,7 @@ public class ProductDetailFragment extends Fragment {
 
     private void setupAddToCart(Product product) {
         binding.btnAddToCart.setOnClickListener(v -> {
-            if (sessionManager.isGuest()) {
+            if (!sessionManager.isLoggedIn()) {
                 showLoginRequiredDialog();
                 return;
             }
